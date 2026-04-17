@@ -1,7 +1,7 @@
 ---
 name: zeronews-expose-service
 description: Expose a local service through the ZeroNews client by creating a tunnel with `zeronews add`. Use when asked to expose a local app, add a tunnel, publish a local service, or create a ZeroNews tunnel.
-license: UNLICENSED
+license: MIT
 metadata:
   author: zeronews
   version: "1.0"

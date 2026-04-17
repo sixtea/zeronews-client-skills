@@ -1,7 +1,7 @@
 ---
 name: zeronews-share-files
 description: Share a local directory through the ZeroNews client using the supported `file_share` feature. Use when asked to publish a folder, browse files remotely, or expose a local directory through a ZeroNews tunnel.
-license: UNLICENSED
+license: MIT
 metadata:
   author: zeronews
   version: "1.0"

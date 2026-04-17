@@ -93,3 +93,7 @@ Share a local folder through the client
 - `skills/<name>/references/` - supporting details when they improve safety or usability
 
 This repository is intentionally user-facing. It explains how to use the client safely and consistently, without exposing internal implementation details.
+
+## License
+
+MIT

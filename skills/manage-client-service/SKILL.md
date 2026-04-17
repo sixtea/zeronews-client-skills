@@ -1,7 +1,7 @@
 ---
 name: zeronews-manage-client-service
 description: Manage the ZeroNews client as a native OS service with `zeronews service`. Use when asked to install, start, stop, restart, uninstall, or inspect the ZeroNews client service.
-license: UNLICENSED
+license: MIT
 metadata:
   author: zeronews
   version: "1.0"

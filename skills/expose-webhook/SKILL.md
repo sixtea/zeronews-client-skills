@@ -1,7 +1,7 @@
 ---
 name: zeronews-expose-webhook
 description: Create a ZeroNews webhook tunnel using the supported `webhook` configuration shapes. Use when asked to expose a webhook callback, verify WeChat Pay callbacks, or verify WeChat Contract callbacks.
-license: UNLICENSED
+license: MIT
 metadata:
   author: zeronews
   version: "1.0"

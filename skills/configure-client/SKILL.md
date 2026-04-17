@@ -1,7 +1,7 @@
 ---
 name: zeronews-configure-client
 description: Configure a ZeroNews client with `zeronews authtoken`, save local client config, and optionally prepare it for long-lived use. Use when asked to register, authenticate, bind, or initialize a ZeroNews client.
-license: UNLICENSED
+license: MIT
 metadata:
   author: zeronews
   version: "1.0"

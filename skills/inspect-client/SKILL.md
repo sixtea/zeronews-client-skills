@@ -1,7 +1,7 @@
 ---
 name: zeronews-inspect-client
 description: Inspect a local ZeroNews client through its runtime file, local API, service status, and logs. Use when asked whether the client is running, connected, configured, healthy, or currently serving endpoints.
-license: UNLICENSED
+license: MIT
 metadata:
   author: zeronews
   version: "1.0"

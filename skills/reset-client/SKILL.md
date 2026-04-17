@@ -1,7 +1,7 @@
 ---
 name: zeronews-reset-client
 description: Reset local ZeroNews client state with `zeronews reset`. Use only when the user explicitly wants to remove service registration and local client state.
-license: UNLICENSED
+license: MIT
 metadata:
   author: zeronews
   version: "1.0"
