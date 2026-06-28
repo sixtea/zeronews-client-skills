@@ -4,6 +4,7 @@ A collection of Agent Skills for AI coding agents working with the ZeroNews clie
 
 These skills are written for real user tasks:
 
+- install the client online on Linux, macOS, Windows, or Docker
 - configure a client
 - expose a local service
 - inspect runtime status
@@ -13,6 +14,10 @@ These skills are written for real user tasks:
 - reset local client state when explicitly requested
 
 ## Available Skills
+
+### zeronews-install-client
+
+Download and install the ZeroNews client from official online sources on Linux, macOS, or Windows, or run it through Docker. Binds AuthToken during setup and starts the client.
 
 ### zeronews-configure-client
 
@@ -60,12 +65,25 @@ Reset local client state with `zeronews reset`. This is destructive and should o
   - `/api/v1/endpoints`
   - `/api/v1/reconnect`
 - Do not edit `config.yml` by hand when the existing CLI can persist it.
+- Before any command that would use `sudo`, check whether the session is already root (`id -u` is `0` on Linux/macOS). If so, run the command directly without `sudo`.
 - Do not assume UDP tunnel support.
 - Do not invent unsupported features. The supported feature families documented here are:
   - `webhook`
   - `file_share`
 
 ## Examples
+
+```text
+Install ZeroNews on this Linux server with my auth token and start it as a service
+```
+
+```text
+Set up ZeroNews in Docker and use my auth token
+```
+
+```text
+Download and install the ZeroNews client on my Mac, then start it
+```
 
 ```text
 Configure this client with my auth token and make it run as a service

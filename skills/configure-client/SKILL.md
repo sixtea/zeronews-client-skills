@@ -58,19 +58,40 @@ If the user provides a client ID:
 zeronews --workdir {WORKDIR} authtoken {TOKEN} {CLIENT_ID}
 ```
 
-### Step 3: Handle existing config carefully
+### Step 3: Handle `Local config file already exists, token update ignored`
 
-Do not overwrite an existing stopped-client config silently.
+If `authtoken` prints:
 
-Expected behavior:
+```text
+Local config file already exists, token update ignored
+```
 
-- if a running local client is reachable, the CLI can reconfigure the running client
-- if no running local client is reachable and a config file already exists, the CLI may keep the existing config instead of replacing it
+stop immediately. The new token was **not** applied. Do not continue as if auth succeeded.
 
-If replacement is required and the normal auth command refuses to replace the file, stop and ask the user whether to:
+Present a clear choice to the user:
 
-- start the client first and re-run auth
-- or reset local state explicitly
+1. **Reset** — hand off to `zeronews-reset-client`, then re-run `authtoken`
+2. **Ignore** — keep the existing config and stop the auth attempt
+
+Do not auto-reset. Do not manually delete files when the user chose reset. Follow `references/EXISTING-CONFIG-CONFLICT.md`.
+
+Expected behavior before the warning appears:
+
+- if a running local client is reachable, the CLI can reconfigure through the local API without this warning
+- if no running local client is reachable and `config.yml` already exists, the CLI keeps the old config and prints the warning
+
+If the user chooses **Reset**:
+
+1. hand off to `zeronews-reset-client`
+2. use elevated privileges when required; if `id -u` is already `0`, run without `sudo` (see `references/PRIVILEGE-EXECUTION.md`)
+3. after reset succeeds, re-run `zeronews --workdir {WORKDIR} authtoken {TOKEN}`
+4. continue only after the CLI prints `Authentication successful`
+
+If the user chooses **Ignore**:
+
+- explain that the existing binding was kept
+- do not retry auth unless the user changes their mind
+- hand off to `zeronews-inspect-client` if they want to verify current state
 
 ### Step 4: If the user asked for long-lived operation
 
@@ -90,4 +111,7 @@ Return:
 
 - do not write `config.yml` by hand when `zeronews authtoken` can do it
 - do not delete an existing config without explicit user approval
+- when auth prints `Local config file already exists, token update ignored`, require an explicit reset-or-ignore choice; never auto-delete config
+- when the user chooses reset, hand off to `zeronews-reset-client` instead of manually deleting files
+- before any command that would use `sudo`, check whether the session is already root; if `id -u` is `0`, run without `sudo`
 - do not assume the runtime file means the local client is healthy; probe it first
