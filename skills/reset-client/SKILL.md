@@ -1,16 +1,18 @@
 ---
 name: zeronews-reset-client
-description: Reset local ZeroNews client state with `zeronews reset`. Use only when the user explicitly wants to remove service registration and local client state.
+description: Reset local ZeroNews client state with `zeronews reset`. Use when the user explicitly wants to remove service registration and local client state, including after choosing Reset during an authtoken conflict.
 license: MIT
 metadata:
   author: zeronews
   version: "1.0"
-compatibility: Requires the `zeronews` CLI. This is destructive.
+compatibility: Requires the `zeronews` CLI. This is destructive. May require elevated privileges when a system service is installed.
 ---
 
 # Reset Client
 
 Reset the local client only on explicit user request.
+
+This skill is also the required path when the user chooses **Reset** after `authtoken` prints `Local config file already exists, token update ignored`.
 
 ## What this skill does
 
@@ -23,26 +25,83 @@ The reset flow:
 - removes the log directory
 - removes the workdir if it becomes empty
 
+## Prerequisites
+
+- `zeronews` command available
+- user explicitly confirmed reset
+- elevated privileges when a system service is installed:
+  - Linux / macOS: run with `sudo` when service uninstall is needed
+  - Windows: run from an Administrator PowerShell or CMD when service uninstall is needed
+
+The agent cannot obtain privileges automatically. Tell the user when `sudo` or an Administrator shell is required and rerun reset there.
+
+Before any command that would use `sudo`, check the current user. On Linux/macOS, if `id -u` is `0`, run the command directly without `sudo`. See `../configure-client/references/PRIVILEGE-EXECUTION.md`.
+
 ## Workflow
 
 ### Step 1: Confirm intent clearly
 
 Ask the user to confirm they want local client state removed.
 
-Do not use this as a convenience shortcut for routine auth changes unless the user agreed.
+When this reset comes from an auth conflict, explain that reset will clear the old binding so a new AuthToken can be applied afterward.
 
-### Step 2: Run the built-in reset
+Do not use this as a convenience shortcut unless the user agreed.
+
+### Step 2: Detect privileges, then run reset
+
+Silently check whether the session is already elevated:
+
+- Linux / macOS: `id -u` → `0` means root
+- Windows: Administrator shell check per `../configure-client/references/PRIVILEGE-EXECUTION.md`
+
+Linux / macOS when a service may be installed:
+
+```bash
+# non-root session
+sudo zeronews --workdir {WORKDIR} reset
+
+# already root
+zeronews --workdir {WORKDIR} reset
+```
+
+Windows when a service may be installed:
+
+```powershell
+.\zeronews.exe reset
+```
+
+Run from an Administrator shell when not already elevated.
+
+When no system service was installed and the workdir is user-writable, the non-elevated command may be enough:
 
 ```bash
 zeronews --workdir {WORKDIR} reset
 ```
 
+If reset fails with:
+
+```text
+Reset requires administrator privileges. Please run with sudo
+```
+
+stop, tell the user to rerun with the required privileges, and do not claim reset completed.
+
 ### Step 3: Explain what was removed
 
 Report the removed paths and whether service uninstall was skipped, completed, or blocked by privileges.
 
+### Step 4: Resume the calling flow when applicable
+
+If reset was triggered from an auth conflict in `zeronews-install-client` or `zeronews-configure-client`:
+
+1. return to the calling skill
+2. re-run `zeronews --workdir {WORKDIR} authtoken {TOKEN}`
+3. continue only after the CLI prints `Authentication successful`
+
 ## Safety rules
 
 - this skill is destructive
-- do not run it to work around a smaller issue if inspection or re-auth is enough
+- before any command that would use `sudo`, check whether the session is already root; if `id -u` is `0`, run without `sudo`
+- do not manually delete individual files when `zeronews reset` is the chosen reset path
 - surface privilege failures plainly instead of pretending reset completed
+- do not run reset unless the user explicitly chose reset or asked for full local cleanup

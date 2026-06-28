@@ -1,5 +1,7 @@
 # Service Privileges
 
+Before running any command shown here with `sudo`, check whether the current session is already root. If `id -u` is `0`, run the command without `sudo`. See `PRIVILEGE-EXECUTION.md`.
+
 Service actions use native OS integrations and may require elevated privileges.
 
 - Linux: `systemd` under `/etc/systemd/system/zeronews-client.service`
