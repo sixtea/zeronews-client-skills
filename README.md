@@ -45,7 +45,7 @@ Create a supported webhook tunnel:
 
 ### zeronews-share-files
 
-Create a file-sharing tunnel with a supported `file_share` feature config.
+Create a file-sharing tunnel with a supported `file_share` feature config. Creating a share requires `root_path` and `admin_password` (at least 8 characters). If a password is set but the client is not upgraded, the public URL may still serve the whole share as anonymous read-only.
 
 ### zeronews-reset-client
 
