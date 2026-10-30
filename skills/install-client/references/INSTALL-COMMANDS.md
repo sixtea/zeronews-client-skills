@@ -14,16 +14,26 @@ https://download.zeronews.cc
 
 Supported distros include Debian, Ubuntu, RHEL, CentOS, AlmaLinux, OpenEuler, Opensuse, Manjaro, Kylin, Opencloudos, and Fedora.
 
-Install and auth in one step:
+Install the binary only, then bind with browser login:
+
+```bash
+curl -SLk https://download.zeronews.cc/linux/zeronews-install.sh | sh -s install
+NO_TTY=1 zeronews login
+zeronews status --json
+```
+
+The official script still accepts a token (unchanged):
 
 ```bash
 curl -SLk https://download.zeronews.cc/linux/zeronews-install.sh | sh -s install {TOKEN}
 ```
 
-Use `sudo` when the environment requires elevated privileges:
+Use `sudo` when the environment requires elevated privileges. Pair sudo with the same workdir (`/etc/zeronews`):
 
 ```bash
-curl -SLk https://download.zeronews.cc/linux/zeronews-install.sh | sudo sh -s install {TOKEN}
+curl -SLk https://download.zeronews.cc/linux/zeronews-install.sh | sudo sh -s install
+sudo NO_TTY=1 zeronews login
+sudo zeronews status --json
 ```
 
 After install, the CLI command is `zeronews`.
@@ -85,7 +95,15 @@ mv zeronews.tmp zeronews
 chmod +x zeronews
 ```
 
-Authenticate:
+Bind with browser login (preferred):
+
+```bash
+cd /Applications/zeronews
+NO_TTY=1 ./zeronews login
+./zeronews status --json
+```
+
+Or with an AuthToken the user already pasted:
 
 ```bash
 cd /Applications/zeronews
@@ -131,7 +149,15 @@ Invoke-WebRequest -Uri "https://download.zeronews.cc/windows/x64/zeronews.exe" -
 Set-Location D:\zeronews
 ```
 
-Authenticate:
+Bind with browser login (preferred):
+
+```powershell
+$env:NO_TTY = "1"
+.\zeronews.exe login
+.\zeronews.exe status --json
+```
+
+Or with an AuthToken the user already pasted:
 
 ```powershell
 .\zeronews.exe authtoken {TOKEN}
