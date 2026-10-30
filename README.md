@@ -17,11 +17,11 @@ These skills are written for real user tasks:
 
 ### zeronews-install-client
 
-Download and install the ZeroNews client from official online sources on Linux, macOS, or Windows, or run it through Docker. Binds AuthToken during setup and starts the client.
+Download and install the ZeroNews client from official online sources on Linux, macOS, or Windows, or run it through Docker. Native installs bind with `zeronews login`; Docker still uses AuthToken.
 
 ### zeronews-configure-client
 
-Configure a ZeroNews client with `zeronews authtoken`, save local config, and optionally prepare it for service mode.
+Configure a ZeroNews client with `zeronews login` or `zeronews authtoken`, save local config, and optionally prepare it for service mode.
 
 ### zeronews-expose-service
 
@@ -54,7 +54,9 @@ Reset local client state with `zeronews reset`. This is destructive and should o
 ## Design Rules
 
 - Prefer the CLI for mutating actions:
+  - `zeronews login`
   - `zeronews authtoken`
+  - `zeronews status --json`
   - `zeronews add`
   - `zeronews service ...`
   - `zeronews reset`
