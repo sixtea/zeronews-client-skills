@@ -80,17 +80,20 @@ Use this for a WeChat Contract verified webhook tunnel.
 
 ## File share
 
-Use this minimal config:
+Creating a file-share tunnel requires `root_path` (absolute) and `admin_password` (at least 8 characters):
 
 ```json
 {
   "file_share": {
-    "root_path": "/absolute/path/to/share"
+    "root_path": "/absolute/path/to/share",
+    "admin_password": "<at least 8 characters>"
   }
 }
 ```
 
-Use this for a file-sharing tunnel.
+Use this for a file-sharing tunnel. Do not create with only `root_path`. Do not use an empty `admin_password` to turn off NAS / file-share login.
+
+If an admin password is set but the client has not been upgraded, the public URL may still serve the whole share as anonymous read-only. Do not claim that filling in a password will make an old client require login.
 
 ## TLS caveat
 

@@ -20,6 +20,7 @@ The reset flow:
 
 - attempts to uninstall the system service
 - removes `config.yml`
+- removes `login_pending.json`
 - removes `control-plane.request.lock`
 - removes `prg_runtime.json`
 - removes the log directory
@@ -95,8 +96,8 @@ Report the removed paths and whether service uninstall was skipped, completed, o
 If reset was triggered from an auth conflict in `zeronews-install-client` or `zeronews-configure-client`:
 
 1. return to the calling skill
-2. re-run `zeronews --workdir {WORKDIR} authtoken {TOKEN}`
-3. continue only after the CLI prints `Authentication successful`
+2. re-bind with `NO_TTY=1 zeronews --workdir {WORKDIR} login` (or `authtoken {TOKEN}` if the user is using a token)
+3. continue only after `status --json` shows `login: true` (or the CLI prints `Authentication successful`)
 
 ## Safety rules
 

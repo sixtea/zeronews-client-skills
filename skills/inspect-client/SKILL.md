@@ -12,6 +12,14 @@ compatibility: Works best when a local client runtime is running, but can still 
 
 Inspect the local ZeroNews client without mutating state unless the user explicitly asks for a repair action.
 
+`zeronews status --json` is **not** read-only when `{workdir}/login_pending.json` exists: it will poll the control plane and may write `config.yml`. For a read-only check, prefer `{workdir}/config.yml` plus the local API `/api/v1/status` when the runtime is healthy. If the user wants to finish a pending browser login, then `status --json` is the correct command.
+
+Read these JSON fields; do not treat exit `3` as failure, and do not treat “JSON parsed” as logged in:
+
+- `login`
+- `login_pending`
+- `login_error`
+
 ## What this skill does
 
 - reads `prg_runtime.json`

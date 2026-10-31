@@ -49,6 +49,7 @@ Ask all questions upfront:
    - none
    - `webhook`
    - `file_share`
+7. if `file_share`: absolute `root_path` and `admin_password` (at least 8 characters). Warn that an old client still serves the share as anonymous read-only until upgraded.
 
 If the client is not configured, stop and use `zeronews-configure-client` first.
 
