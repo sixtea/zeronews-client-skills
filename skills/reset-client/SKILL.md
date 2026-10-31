@@ -97,7 +97,7 @@ If reset was triggered from an auth conflict in `zeronews-install-client` or `ze
 
 1. return to the calling skill
 2. re-bind with `NO_TTY=1 zeronews --workdir {WORKDIR} login` (or `authtoken {TOKEN}` if the user is using a token)
-3. continue only after `status --json` shows `logged_in: true` (or the CLI prints `Authentication successful`)
+3. continue only after `status --json` shows `login: true` (or the CLI prints `Authentication successful`)
 
 ## Safety rules
 

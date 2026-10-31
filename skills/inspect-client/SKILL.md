@@ -16,7 +16,7 @@ Inspect the local ZeroNews client without mutating state unless the user explici
 
 Read these JSON fields; do not treat exit `3` as failure, and do not treat “JSON parsed” as logged in:
 
-- `logged_in`
+- `login`
 - `login_pending`
 - `login_error`
 

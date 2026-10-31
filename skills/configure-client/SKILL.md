@@ -37,7 +37,7 @@ Silently inspect:
 
 Ask all questions upfront:
 
-1. If `status --json` already shows `logged_in: true`, stop. Do not confirm again and do not ask for a token.
+1. If `status --json` already shows `login: true`, stop. Do not confirm again and do not ask for a token.
 2. Prefer browser login unless the user already pasted an AuthToken.
 3. Use the default workdir, or a specific absolute `--workdir` path?
 4. Is this only a local one-time setup, or should the client also be prepared for service mode afterward?
@@ -53,7 +53,7 @@ NO_TTY=1 zeronews --workdir {WORKDIR} login
 zeronews --workdir {WORKDIR} status --json
 ```
 
-Set `NO_TTY=1` even when a TTY exists so login returns immediately. Poll `status --json` until `logged_in` is true. Exit `3` means wait. Do not paste the verify URL into chat if the local browser opened.
+Set `NO_TTY=1` even when a TTY exists so login returns immediately. Poll `status --json` until `login` is true. Exit `3` means wait. Do not paste the verify URL into chat if the local browser opened.
 
 If the user provided a token:
 
@@ -96,7 +96,7 @@ If the user chooses **Reset**:
 1. hand off to `zeronews-reset-client`
 2. use elevated privileges when required; if `id -u` is already `0`, run without `sudo` (see `references/PRIVILEGE-EXECUTION.md`)
 3. after reset succeeds, re-bind with `NO_TTY=1 zeronews --workdir {WORKDIR} login` (or `authtoken {TOKEN}` if using a token)
-4. continue only after `status --json` shows `logged_in: true` (or the CLI prints `Authentication successful`)
+4. continue only after `status --json` shows `login: true` (or the CLI prints `Authentication successful`)
 
 If the user chooses **Ignore**:
 

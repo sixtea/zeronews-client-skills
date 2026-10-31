@@ -83,7 +83,7 @@ Docker auth happens through the `TOKEN` environment variable. Do not run a separ
 
 ### Step 3: Bind the machine (native installs only)
 
-If `zeronews status --json` already has `"logged_in": true` (valid `config.yml`), skip this step. Do not ask for a token and do not open login again.
+If `zeronews status --json` already has `"login": true` (valid `config.yml`), skip this step. Do not ask for a token and do not open login again.
 
 If the user pasted an AuthToken, keep the old path: Linux `sh -s install {TOKEN}`, or `zeronews authtoken {TOKEN}` on macOS/Windows.
 
@@ -103,7 +103,7 @@ Then poll:
 zeronews --workdir {WORKDIR} status --json
 ```
 
-- exit `0` and `"logged_in": true` → bound. If the service is not running, `service start`. If it is already running without the new config, `service restart` or `reload`.
+- exit `0` and `"login": true` → bound. If the service is not running, `service start`. If it is already running without the new config, `service restart` or `reload`.
 - exit `3` and `"login_pending": true` → still waiting; poll again. This is not a failure. Do not treat JSON parse success as logged in.
 - exit `1` and `"login_error"` → stop and report the error (`denied` / `expired` / `quota_exceeded` / `failed`)
 - `NO_TTY` **exists** (including `NO_TTY=0`) means non-interactive: `login` prints the URL and exits; only `status --json` writes `config.yml`.
@@ -134,7 +134,7 @@ If the user chooses **Reset**:
 1. hand off to `zeronews-reset-client`
 2. use elevated privileges when required; if `id -u` is already `0`, run without `sudo` (see `../configure-client/references/PRIVILEGE-EXECUTION.md`)
 3. after reset succeeds, re-bind with `zeronews login` (or `authtoken {TOKEN}` / the Linux script with `{TOKEN}` if that was the original path)
-4. continue install/start only after `logged_in: true` or `Authentication successful`
+4. continue install/start only after `login: true` or `Authentication successful`
 
 If the user chooses **Ignore**:
 
